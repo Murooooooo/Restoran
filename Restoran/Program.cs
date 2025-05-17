@@ -1,7 +1,11 @@
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Restoran.DAL;
+using Restoran.Helper.Email;
 using Restoran.Models;
+using Restoran.Services.Email;
+
 
 namespace Restoran
 {
@@ -16,10 +20,14 @@ namespace Restoran
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("Msi"));
             });
 
             builder.Services.AddIdentity<AppUser,IdentityRole>().AddDefaultTokenProviders().AddEntityFrameworkStores<AppDbContext>();
+
+            builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+            builder.Services.AddTransient<IMailService,MailService>();
+
 
             var app = builder.Build();
 

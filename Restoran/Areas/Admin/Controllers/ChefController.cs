@@ -7,7 +7,7 @@ using System.Diagnostics.Metrics;
 namespace Restoran.Areas.Admin.Controllers
 {
     [Area(nameof(Admin))]
-   
+    [Authorize(Roles ="Admin")]
     public class ChefController : Controller
     {
         private readonly AppDbContext _context;
